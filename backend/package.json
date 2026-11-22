@@ -1,0 +1,13 @@
+{
+  "name": "farid-portfolio-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "npm --prefix .. run dev",
+    "start": "npm --prefix .. start",
+    "test": "node --test test/*.test.js",
+    "messages": "node --env-file-if-exists=.env scripts/messages.js"
+  },
+  "engines": { "node": ">=24" }
+}

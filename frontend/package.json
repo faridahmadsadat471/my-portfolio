@@ -1,0 +1,14 @@
+{
+  "name": "farid-portfolio-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Farid Ahmad Sadat's Clean Developer portfolio frontend.",
+  "scripts": {
+    "dev": "npm --prefix .. run dev",
+    "start": "npm --prefix .. start",
+    "build": "node scripts/build.js",
+    "preview": "npm --prefix .. run preview"
+  },
+  "engines": { "node": ">=24" }
+}

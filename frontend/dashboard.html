@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Portfolio Studio</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script type="module" src="/assets/dashboard.js"></script>
+</head>
+<body class="dashboard-body">
+  <section id="login-screen" class="login-screen">
+    <div class="login-card card bg-base-100 shadow-xl">
+      <a class="brand" href="/" aria-label="Back to portfolio"><span class="brand-symbol" aria-hidden="true">&lt;/&gt;</span><span>PORTFOLIO<span class="brand-dot">.</span></span></a>
+      <p class="eyebrow">YOUR CREATOR STUDIO</p>
+      <h1>Welcome back.</h1>
+      <p class="login-description">Sign in to manage your work, projects, and profile.</p>
+      <label class="form-control">
+        <span class="label-text">Dashboard key</span>
+        <span class="password-field"><input id="dashboard-key" class="input input-bordered" type="password" autocomplete="current-password" placeholder="Enter your dashboard key" /><button id="toggle-key-visibility" class="password-visibility" type="button" aria-label="Show dashboard key" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></button></span>
+      </label>
+      <button id="unlock" class="btn btn-primary" type="button">Open dashboard</button>
+      <p id="login-status" class="text-error" role="alert"></p>
+      <button id="login-theme" class="btn btn-ghost btn-sm theme-button" type="button" aria-label="Switch color theme"></button>
+    </div>
+  </section>
+
+  <div id="studio" class="studio-layout" hidden>
+    <aside class="studio-sidebar">
+      <a class="brand studio-brand" href="/" aria-label="View portfolio"><span class="brand-photo-slot"><img class="profile-brand-photo" alt="" hidden /><span class="brand-symbol" aria-hidden="true">&lt;/&gt;</span></span><span>FARID<span class="brand-dot">.</span></span></a>
+      <div class="sidebar-label">WORKSPACE</div>
+      <nav class="studio-nav" aria-label="Dashboard sections">
+        <button class="studio-nav-item active" type="button" data-panel="overview"><span aria-hidden="true">⌂</span> Overview</button>
+        <button class="studio-nav-item" type="button" data-panel="projects"><span aria-hidden="true">▦</span> Projects <span id="nav-project-count" class="nav-count">0</span></button>
+        <button class="studio-nav-item" type="button" data-panel="skills"><span aria-hidden="true">✳</span> Skills <span id="nav-skill-count" class="nav-count">0</span></button>
+        <button class="studio-nav-item" type="button" data-panel="messages"><span aria-hidden="true">✉</span> Messages <span id="nav-message-count" class="nav-count">0</span></button>
+        <button class="studio-nav-item" type="button" data-panel="profile"><span aria-hidden="true">◉</span> Profile</button>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-avatar">F</div><div><strong>Farid Ahmad Sadat</strong><span>Portfolio owner</span></div>
+      </div>
+    </aside>
+
+    <main class="studio-main">
+      <header class="studio-topbar">
+        <div><p class="eyebrow">PORTFOLIO MANAGEMENT</p><h1 id="page-title">Overview</h1></div>
+        <div class="topbar-actions">
+          <a class="btn btn-outline btn-sm" href="/" target="_blank" rel="noopener noreferrer">View portfolio <span aria-hidden="true">↗</span></a>
+          <button id="theme-toggle" class="btn btn-ghost btn-square" type="button" aria-label="Switch color theme"></button>
+          <button id="logout" class="btn btn-ghost btn-sm" type="button">Sign out</button>
+        </div>
+      </header>
+
+      <div id="app-status" class="alert dashboard-alert" role="status" hidden></div>
+      <section id="panel-overview" class="studio-panel">
+        <div class="welcome-card">
+          <div><p class="welcome-kicker">YOUR SPACE, YOUR STORY</p><h2>Make your next idea visible.</h2><p>Keep your portfolio fresh by sharing what you’re building and what you’re learning.</p></div>
+          <button class="btn btn-primary" type="button" data-open-panel="projects">＋ Add a project</button>
+          <span class="welcome-mark" aria-hidden="true">&lt;/&gt;</span>
+        </div>
+        <div class="overview-stats">
+          <article class="overview-stat card bg-base-100"><span class="stat-icon project-icon">▦</span><div><span>Published projects</span><strong id="overview-project-count">0</strong></div><button type="button" data-open-panel="projects">Manage projects →</button></article>
+          <article class="overview-stat card bg-base-100"><span class="stat-icon message-icon">✉</span><div><span>Inbox messages</span><strong id="overview-message-count">0</strong></div><button type="button" data-open-panel="messages">View inbox →</button></article>
+        </div>
+        <section class="content-card card bg-base-100">
+          <div class="content-card-heading"><div><p class="eyebrow">RECENT WORK</p><h2>Your projects</h2></div><button class="btn btn-ghost btn-sm" type="button" data-open-panel="projects">See all →</button></div>
+          <div id="overview-projects" class="admin-project-grid"></div>
+        </section>
+      </section>
+
+      <section id="panel-projects" class="studio-panel" hidden>
+        <div class="panel-intro"><div><p class="eyebrow">SHOW WHAT YOU’VE BUILT</p><h2>Project library</h2><p>Add projects here and they’ll appear on your public portfolio.</p></div><button id="new-project" class="btn btn-primary" type="button">＋ New project</button></div>
+        <form id="project-form" class="content-card card bg-base-100" hidden>
+          <div class="content-card-heading"><div><p class="eyebrow">PROJECT DETAILS</p><h2 id="project-form-title">Add a project</h2></div><button id="cancel-project" class="btn btn-ghost btn-sm" type="button">Cancel</button></div>
+          <input id="project-id" type="hidden" />
+          <div class="project-form-grid">
+            <label class="form-control"><span class="label-text">Project name *</span><input id="project-title" class="input input-bordered" maxlength="100" required placeholder="e.g. Personal finance tracker" /></label>
+            <label class="form-control"><span class="label-text">Technologies</span><input id="project-technologies" class="input input-bordered" placeholder="React, Node.js, MongoDB" /><span class="field-hint">Separate technologies with commas.</span></label>
+            <label class="form-control project-description-field"><span class="label-text">Description *</span><textarea id="project-description" class="textarea textarea-bordered" minlength="10" maxlength="2000" rows="4" required placeholder="What does it do, and what did you learn?"></textarea></label>
+            <label class="form-control"><span class="label-text">Source code URL</span><input id="project-github" class="input input-bordered" type="url" placeholder="https://github.com/..." /></label>
+            <label class="form-control"><span class="label-text">Live project URL</span><input id="project-live" class="input input-bordered" type="url" placeholder="https://..." /></label>
+          </div>
+          <p id="project-status" class="form-feedback" role="alert"></p>
+          <div class="form-actions"><button class="btn btn-primary" type="submit">Save project</button></div>
+        </form>
+        <div id="project-list" class="admin-project-grid"></div>
+        <div id="project-empty" class="content-card empty-state card bg-base-100" hidden><span>▦</span><h2>Your first project starts here.</h2><p>Add a project to show visitors the work you’re proud of.</p><button class="btn btn-primary btn-sm" type="button" data-open-form>Add your first project</button></div>
+      </section>
+
+      <section id="panel-skills" class="studio-panel" hidden>
+        <div class="panel-intro"><div><p class="eyebrow">KEEP GROWING</p><h2>Your skills</h2><p>Add what you’re learning. Your public toolkit updates when you save.</p></div></div>
+        <form id="skills-form" class="content-card card bg-base-100">
+          <div class="content-card-heading"><div><p class="eyebrow">YOUR TOOLKIT</p><h2>Manage skills</h2></div><span id="skills-count" class="badge badge-outline"></span></div>
+          <div id="skills-list" class="skills-admin-list"></div>
+          <div class="add-skill-row"><label class="form-control"><span class="label-text">Add a skill</span><input id="new-skill" class="input input-bordered" maxlength="40" placeholder="e.g. TypeScript" /></label><button id="add-skill" class="btn btn-outline" type="button">＋ Add skill</button></div>
+          <p id="skills-status" class="form-feedback" role="status"></p>
+          <div class="form-actions"><button class="btn btn-primary" type="submit">Save skills</button></div>
+        </form>
+      </section>
+
+      <section id="panel-messages" class="studio-panel" hidden>
+        <div class="panel-intro"><div><p class="eyebrow">STAY IN THE LOOP</p><h2>Your inbox</h2><p>Messages sent through your portfolio contact form.</p></div></div>
+        <div id="message-list" class="inbox-list"></div>
+        <div id="message-empty" class="content-card empty-state card bg-base-100" hidden><span>✉</span><h2>It’s quiet for now.</h2><p>New contact form messages will show up here.</p></div>
+      </section>
+
+      <section id="panel-profile" class="studio-panel" hidden>
+        <div class="panel-intro"><div><p class="eyebrow">MAKE IT PERSONAL</p><h2>Your profile</h2><p>Add a profile photo to introduce yourself on the portfolio.</p></div></div>
+        <div class="content-card profile-card card bg-base-100">
+          <div class="profile-photo-wrap"><img id="profile-photo-preview" alt="Profile photo preview" hidden /><span id="profile-photo-placeholder">F</span></div>
+          <div class="profile-photo-copy"><h3>Profile photo</h3><p>Use a clear PNG, JPEG, or WebP image up to 2 MB. Your photo will appear on your public portfolio.</p><div class="profile-photo-actions"><label class="btn btn-primary btn-sm" for="profile-photo-file">Choose photo</label><input id="profile-photo-file" type="file" accept="image/png,image/jpeg,image/webp" hidden /><button id="remove-photo" class="btn btn-ghost btn-sm" type="button" hidden>Remove photo</button></div><p id="photo-status" class="form-feedback" role="status"></p></div>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

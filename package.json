@@ -1,0 +1,33 @@
+{
+  "name": "farid-ahmad-sadat-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Farid Ahmad Sadat's developer portfolio with a Node.js and MongoDB contact backend.",
+  "scripts": {
+    "predev": "npm run build",
+    "dev": "node --env-file-if-exists=backend/.env --watch backend/server.js",
+    "prestart": "npm run build",
+    "start": "node --env-file-if-exists=backend/.env backend/server.js",
+    "prepreview": "npm run build",
+    "build": "node frontend/scripts/build.js",
+    "preview": "node --env-file-if-exists=backend/.env backend/server.js --dist",
+    "pretest": "npm run build",
+    "test": "node --test backend/test/*.test.js",
+    "test:mongo": "node --env-file-if-exists=backend/.env --test backend/test/mongo.integration.js",
+    "check:email": "node --env-file-if-exists=backend/.env backend/scripts/check-email.js",
+    "messages": "node --env-file-if-exists=backend/.env backend/scripts/messages.js"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "dependencies": {
+    "daisyui": "^5.8.2",
+    "mongodb": "^7.9.1",
+    "nodemailer": "^10.6.1",
+    "tailwindcss": "^4.3.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.5"
+  }
+}
